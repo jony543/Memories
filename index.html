@@ -2,14 +2,20 @@
 <html lang="en">
   <head>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.11.1/p5.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.11.1/addons/p5.sound.min.js"></script>
+    <script src="http://unpkg.com/tone"></script>
     <link rel="stylesheet" type="text/css" href="style.css">
     <meta charset="utf-8" />
-
   </head>
   <body>
+    <button class="audio-start">Start Audio</button>
     <main>
     </main>
+    <script src="sound.js"></script>
     <script src="sketch.js"></script>
+    <script>
+      document.querySelector("button.audio-start")?.addEventListener("click", async () => {
+        await setupSounds();
+      });
+    </script>
   </body>
 </html>
