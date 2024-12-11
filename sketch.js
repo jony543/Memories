@@ -39,6 +39,12 @@ function draw() {
     timeBuffer.shift();
   }
 
+  // Calculate the proportion of gray pixels in the current frame
+  let grayProportion = calculateGrayProportion(video.pixels);
+  if (grayProportion < 0.7) {
+    playRandomSound();
+  }
+
   // Draw the original video flipped horizontally
   push();
   translate(width, 0); // Move the origin to the right edge
@@ -62,6 +68,25 @@ function draw() {
   // textSize(32);
   // textAlign(CENTER, CENTER);
   // text("מי אתה באמת? זיכרון מעוות, או השתקפות?", width / 2, height - 50);
+}
+
+// Helper function to calculate gray pixel proportion
+function calculateGrayProportion(pixels) {
+  let grayPixelCount = 0;
+  let totalPixels = pixels.length / 4; // Each pixel has 4 values (R, G, B, A)
+  
+  for (let i = 0; i < pixels.length; i += 4) {
+    let r = pixels[i];
+    let g = pixels[i + 1];
+    let b = pixels[i + 2];
+    
+    // Check if the pixel is gray (R, G, B are close to each other)
+    if (abs(r - g) < 15 && abs(g - b) < 15 && abs(r - b) < 15) {
+      grayPixelCount++;
+    }
+  }
+  
+  return grayPixelCount / totalPixels;
 }
 
 function windowResized() {

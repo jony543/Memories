@@ -4,11 +4,35 @@ const reverses = [];
 
 const delay = 1.1;
 
+let ch1, ch2;
+
+const playSound = (soundId) => {
+    const p = players[soundId]
+    const r = reverses[soundId]
+
+    if (!p || !r)
+        return;
+
+    if (!p.buffer.loaded || !r.buffer.loaded)
+        return;
+
+    p.start();
+    r.start(`+${delay}`);
+
+    ch1.pan.rampTo(ch1.pan.value * -1, r.buffer.duration, `+${delay}`)
+    ch2.pan.rampTo(ch2.pan.value * -1, r.buffer.duration, `+${delay}`)
+}
+
+const playRandomSound = () => {
+    if (players.every(p => p.state == 'stopped') && reverses.every(p => p.state == 'stopped'))
+        playSound(Math.floor(Math.random() * players.length));
+}
+
 const setupSounds = async () => {
     await Tone.start();
 
-    const ch1 = new Tone.Panner(1).toDestination();
-    const ch2 = new Tone.Panner(-1).toDestination();
+    ch1 = new Tone.Panner(1).toDestination();
+    ch2 = new Tone.Panner(-1).toDestination();
 
     for (url of sounds) {
         const props = {
@@ -29,13 +53,6 @@ const setupSounds = async () => {
 
     document.onkeydown = ev => {
         const soundId = ev.key - '0' - 1;
-        const p = players[soundId]
-        const r = reverses[soundId]
-    
-        p.start();
-        r.start(`+${delay}`);
-
-        ch1.pan.rampTo(ch1.pan.value * -1, r.buffer.duration, `+${delay}`)
-        ch2.pan.rampTo(ch2.pan.value * -1, r.buffer.duration, `+${delay}`)
+        playSound(soundId);
     };
 }
