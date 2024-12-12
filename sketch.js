@@ -62,7 +62,7 @@ function draw() {
   loadPixels();
   let grayProportion = calculateGrayProportion(pixels);
   // console.log({grayProportion});
-  if (grayProportion < 0.85) {
+  if (grayProportion < 0.9) {
     playRandomSound();
   }
   
