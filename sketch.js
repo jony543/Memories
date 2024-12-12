@@ -39,12 +39,7 @@ function draw() {
     timeBuffer.shift();
   }
 
-  // Calculate the proportion of gray pixels in the current frame
-  let grayProportion = calculateGrayProportion(video.pixels);
-  if (grayProportion < 0.7) {
-    playRandomSound();
-  }
-
+  
   // Draw the original video flipped horizontally
   push();
   translate(width, 0); // Move the origin to the right edge
@@ -52,7 +47,7 @@ function draw() {
   tint(255, 255); // Fully opaque
   image(video, 0, 0, width, height);
   pop();
-
+  
   // Draw the delayed, inverted video flipped horizontally
   if (timeBuffer.length === delayFrames) {
     push();
@@ -63,6 +58,14 @@ function draw() {
     pop();
   }
 
+  // Calculate the proportion of gray pixels in the current frame
+  loadPixels();
+  let grayProportion = calculateGrayProportion(pixels);
+  // console.log({grayProportion});
+  if (grayProportion < 0.85) {
+    playRandomSound();
+  }
+  
   // // Add a reflective message
   // fill(255, 255, 255, 200); // White color with transparency
   // textSize(32);

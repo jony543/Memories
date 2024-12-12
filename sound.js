@@ -35,11 +35,12 @@ const setupSounds = async () => {
     ch2 = new Tone.Panner(-1).toDestination();
 
     for (url of sounds) {
+        console.log('loading', url);
         const props = {
             autostart: false,
             url,
-            fadeIn: 0.1,
-            fadeOut: 0.1,
+            fadeIn: 0.8,
+            fadeOut: 0.8,
             onload: () => console.log(url + ' loaded'),
             onerror: (err) => console.log(url + ' error', err),
         }
