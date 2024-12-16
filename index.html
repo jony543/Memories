@@ -13,8 +13,10 @@
     <script src="sound.js"></script>
     <script src="sketch.js"></script>
     <script>
-      document.querySelector("button.audio-start")?.addEventListener("click", async () => {
+      const btn = document.querySelector("button.audio-start")
+      btn?.addEventListener("click", async () => {
         await setupSounds();
+        document.body.removeChild(btn);
       });
     </script>
   </body>

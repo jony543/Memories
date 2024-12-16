@@ -13,6 +13,7 @@ function setup() {
 
   // Create an inverted frame buffer
   invertedFrame = createImage(width, height);
+  frameRate(30);
 }
 
 function draw() {
